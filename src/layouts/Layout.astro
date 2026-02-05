@@ -1,23 +1,113 @@
+---
+import { profile } from '../data/portfolio';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = `${profile.name} | ${profile.title}`,
+  description = profile.tagline 
+} = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		
+		<!-- SEO Meta Tags -->
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta name="author" content={profile.name} />
+		<meta name="keywords" content="cryptography, cybersecurity, post-quantum, researcher, engineer, Kyber, Dilithium" />
+		
+		<!-- Open Graph / Social Media -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:site_name" content={profile.name} />
+		
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		
+		<!-- Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+		
+		<!-- Theme Color -->
+		<meta name="theme-color" content="#ffffff" id="theme-color-meta" />
+		
+		<!-- Prevent flash of wrong theme -->
+		<script is:inline>
+			const theme = localStorage.getItem('theme') || 'light';
+			if (theme === 'dark') {
+				document.documentElement.classList.add('dark');
+				document.getElementById('theme-color-meta')?.setAttribute('content', '#0f172a');
+			}
+		</script>
 	</head>
-	<body>
+	<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans antialiased selection:bg-teal-500/30 selection:text-teal-800 dark:selection:text-teal-200 transition-colors duration-300">
 		<slot />
 	</body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
+<style is:global>
+	/* Smooth scroll behavior */
+	html {
+		scroll-behavior: smooth;
+	}
+	
+	/* Custom scrollbar - Light mode */
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+	
+	::-webkit-scrollbar-track {
+		background: #f1f5f9;
+	}
+	
+	::-webkit-scrollbar-thumb {
+		background: #94a3b8;
+		border-radius: 4px;
+	}
+	
+	::-webkit-scrollbar-thumb:hover {
+		background: #64748b;
+	}
+	
+	/* Custom scrollbar - Dark mode */
+	.dark ::-webkit-scrollbar-track {
+		background: #0f172a;
+	}
+	
+	.dark ::-webkit-scrollbar-thumb {
+		background: #334155;
+	}
+	
+	.dark ::-webkit-scrollbar-thumb:hover {
+		background: #475569;
+	}
+	
+	/* Line clamp utility */
+	.line-clamp-3 {
+		display: -webkit-box;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+	
+	/* Focus styles for accessibility */
+	:focus-visible {
+		outline: 2px solid #14b8a6;
+		outline-offset: 2px;
 	}
 </style>

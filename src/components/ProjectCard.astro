@@ -1,0 +1,85 @@
+---
+import { Github, ExternalLink, Folder } from 'lucide-astro';
+
+interface Props {
+  id: string;
+  title: string;
+  description: string;
+  longDescription?: string;
+  techStack: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+  featured: boolean;
+  category: "cryptography" | "security" | "mobile" | "systems" | "other";
+}
+
+const { id, title, description, techStack, githubUrl, liveUrl, featured, category } = Astro.props;
+
+// Category colors - crypto themed
+const categoryColors: Record<string, { bg: string; text: string; border: string }> = {
+  cryptography: { bg: "bg-teal-500/20", text: "text-teal-400", border: "border-teal-500/30" },
+  security: { bg: "bg-red-500/20", text: "text-red-400", border: "border-red-500/30" },
+  mobile: { bg: "bg-sky-500/20", text: "text-sky-400", border: "border-sky-500/30" },
+  systems: { bg: "bg-amber-500/20", text: "text-amber-400", border: "border-amber-500/30" },
+  other: { bg: "bg-slate-500/20", text: "text-slate-400", border: "border-slate-500/30" },
+};
+
+const colors = categoryColors[category] || categoryColors.other;
+---
+
+<article class="group relative bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 rounded-lg p-6 hover:border-teal-500/50 hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-all duration-300 flex flex-col h-full shadow-sm">
+  <!-- Header -->
+  <div class="flex items-start justify-between mb-4">
+    <div class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700/50 text-teal-600 dark:text-teal-400">
+      <Folder class="w-6 h-6" />
+    </div>
+    <div class="flex items-center gap-3">
+      {githubUrl && githubUrl !== "#" && (
+        <a
+          href={githubUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+          aria-label="View on GitHub"
+        >
+          <Github class="w-5 h-5" />
+        </a>
+      )}
+      {liveUrl && (
+        <a
+          href={liveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+          aria-label="View Live"
+        >
+          <ExternalLink class="w-5 h-5" />
+        </a>
+      )}
+    </div>
+  </div>
+
+  <!-- Category Badge -->
+  <span class={`inline-flex self-start items-center px-2 py-1 rounded text-xs font-mono font-medium ${colors.bg} ${colors.text} border ${colors.border} mb-3`}>
+    {category.charAt(0).toUpperCase() + category.slice(1)}
+  </span>
+
+  <!-- Title -->
+  <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2 group-hover:text-teal-600 dark:group-hover:text-teal-400 transition-colors">
+    {title}
+  </h3>
+
+  <!-- Description -->
+  <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 flex-grow leading-relaxed">
+    {description}
+  </p>
+
+  <!-- Tech Stack -->
+  <div class="flex flex-wrap gap-2 pt-4 border-t border-slate-200 dark:border-slate-700/50 mt-auto">
+    {techStack.map((tech) => (
+      <span class="px-2 py-1 text-xs font-mono rounded bg-slate-100 dark:bg-slate-900/50 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/50">
+        {tech}
+      </span>
+    ))}
+  </div>
+</article>
