@@ -194,9 +194,6 @@ highlights: [
     "CryptAttackTester (CAT): High-Assurance Quantitative Analysis of Attack Costs",
     "SoK: Computer-Aided Cryptography & Formal Verification Tools",
     "Hardware Backdoors in CRYSTALS-Kyber: Kleptography in PQC Hardware",
-    "QKD Oracles: Fixing Formal Security Models for Quantum Key Distribution",
-    "Notions of Entropy: Min-Entropy vs. Shannon Entropy in Cryptography",
-    "Versatile Quantum-Safe Hybrid Key Exchange (VMuckle) for MACsec",
   ],
 };
 
