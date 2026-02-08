@@ -18,7 +18,7 @@ const {
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/x-icon" href="/newfav.ico" />
 		<meta name="generator" content={Astro.generator} />
 		
 		<!-- SEO Meta Tags -->
@@ -37,6 +37,27 @@ const {
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
+		
+		<!-- JSON-LD Structured Data for Site Name -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"name": profile.name,
+			"url": "https://mattc-try.github.io/"
+		})} />
+		
+		<!-- JSON-LD Person Schema for Rich Results -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "Person",
+			"name": profile.name,
+			"jobTitle": profile.title,
+			"url": "https://mattc-try.github.io/",
+			"sameAs": [
+				profile.github,
+				profile.linkedin
+			].filter(Boolean)
+		})} />
 		
 		<!-- Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
